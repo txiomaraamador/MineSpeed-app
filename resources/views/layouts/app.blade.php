@@ -17,6 +17,9 @@
             <ul class="navbar-nav">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('areas.index') }}">Areas</a>
+                    <a href="{{ route('TypeEquipments.index') }}">TypeEquipments</a>
+                    <a href="{{ route('typevehicles.index') }}">TypeVehicles</a>
+                    <a href="{{ route('positions.index') }}">Positions</a>
                 </li>
                 <!-- Agrega más enlaces de navegación según sea necesario -->
             </ul>
