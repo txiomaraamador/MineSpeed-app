@@ -37,18 +37,21 @@ class AreaController extends Controller
     public function store(Request $request)
     {
         // Validación de los datos del formulario
-        $request->validate([
-            'nombre' => 'required|unique:areas,nombre',
-            // Agrega otras reglas de validación si es necesario
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255',
+            'topographic_information' => 'nullable|string',
         ]);
 
         // Crear un nuevo registro de área
-        Area::create($request->all());
+        $area = new Area(); // Importa el modelo Area al principio del archivo si no lo has hecho: use App\Models\Area;
+        $area->name = $validatedData['name'];
+        $area->topographic_information = $validatedData['topographic_information'];
+        $area->save();
 
-        // Redireccionar a la página de índice con un mensaje de éxito
-        return redirect()->route('areas.index')
-                        ->with('success', 'Area created successfully.');
+        // Redirigir al usuario al índice de áreas
+        return redirect()->route('areas.index')->with('success', 'Area created successfully');
     }
+
 
     /**
      * Display the specified resource.
@@ -85,13 +88,21 @@ class AreaController extends Controller
     {
         // Validación de los datos del formulario
         $request->validate([
-            'nombre' => 'required|unique:areas,nombre,'.$id,
+            'name' => 'required|unique:areas,name,'.$id,
+            'topographic_information' => 'nullable|string',
             // Agrega otras reglas de validación si es necesario
         ]);
 
-        // Actualizar el registro de área existente
+        // Obtener el registro de área existente
         $area = Area::findOrFail($id);
-        $area->update($request->all());
+
+        // Actualizar los campos del área con los datos del formulario
+        $area->name = $request->name;
+        $area->topographic_information = $request->topographic_information;
+        // Agrega más campos si es necesario
+
+        // Guardar los cambios en la base de datos
+        $area->save();
 
         // Redireccionar a la página de índice con un mensaje de éxito
         return redirect()->route('areas.index')

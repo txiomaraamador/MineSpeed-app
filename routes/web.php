@@ -39,17 +39,17 @@ Route::get('/positions/{id}/edit', [PositionController::class, 'edit'])->name('p
 Route::put('/positions/{id}', [PositionController::class, 'update'])->name('positions.update');
 Route::delete('/positions/{id}', [PositionController::class, 'destroy'])->name('positions.destroy');
 
-//Tabla Typeequipments
+//Tabla TypeEquipments
 
 use App\Http\Controllers\TypeEquipmentController;
 
-Route::get('/typeequipments', [TypeEquipmentController::class, 'index'])->name('typeequipments.index');
-Route::get('/typeequipments/create', [TypeEquipmentController::class, 'create'])->name('typeequipments.create');
-Route::post('/typeequipments', [TypeEquipmentController::class, 'store'])->name('typeequipments.store');
-Route::get('/typeequipments/{id}', [TypeEquipmentController::class, 'show'])->name('typeequipments.show');
-Route::get('/typeequipments/{id}/edit', [TypeEquipmentController::class, 'edit'])->name('typeequipments.edit');
-Route::put('/typeequipments/{id}', [TypeEquipmentController::class, 'update'])->name('typeequipments.update');
-Route::delete('/typeequipments/{id}', [TypeEquipmentController::class, 'destroy'])->name('typeequipments.destroy');
+Route::get('/TypeEquipments', [TypeEquipmentController::class, 'index'])->name('TypeEquipments.index');
+Route::get('/TypeEquipments/create', [TypeEquipmentController::class, 'create'])->name('TypeEquipments.create');
+Route::post('/TypeEquipments', [TypeEquipmentController::class, 'store'])->name('TypeEquipments.store');
+Route::get('/TypeEquipments/{id}', [TypeEquipmentController::class, 'show'])->name('TypeEquipments.show');
+Route::get('/TypeEquipments/{id}/edit', [TypeEquipmentController::class, 'edit'])->name('TypeEquipments.edit');
+Route::put('/TypeEquipments/{id}', [TypeEquipmentController::class, 'update'])->name('TypeEquipments.update');
+Route::delete('/TypeEquipments/{id}', [TypeEquipmentController::class, 'destroy'])->name('TypeEquipments.destroy');
 
 //Tabla de TypeVehicles.
 use App\Http\Controllers\TypeVehicleController;

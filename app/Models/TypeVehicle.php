@@ -7,5 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class TypeVehicle extends Model
 {
-    use HasFactory;
+    protected $table = 'typevehicles'; // Especifica el nombre de la tabla en la base de datos
+    protected $fillable = ['make']; // Campos que permiten asignación masiva
 }

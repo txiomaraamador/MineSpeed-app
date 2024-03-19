@@ -37,17 +37,19 @@ class PositionController extends Controller
     public function store(Request $request)
     {
         // Validación de los datos del formulario
-        $request->validate([
-            'name' => 'required|unique:positions,name',
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255|unique:positions,name',
             // Agrega otras reglas de validación si es necesario
         ]);
 
         // Crear un nuevo registro de posición
-        Position::create($request->all());
+        $position = new Position();
+        $position->fill($validatedData);
+        $position->save();
 
-        // Redireccionar a la página de índice con un mensaje de éxito
+        // Redireccionar a la página de índice de posiciones con un mensaje de éxito
         return redirect()->route('positions.index')
-                        ->with('success', 'Position created successfully.');
+                         ->with('success', 'Position created successfully.');
     }
 
     /**
@@ -86,7 +88,7 @@ class PositionController extends Controller
         // Validación de los datos del formulario
         $request->validate([
             'name' => 'required|unique:positions,name,'.$id,
-            // Agrega otras reglas de validación si es necesario
+
         ]);
 
         // Actualizar el registro de posición existente

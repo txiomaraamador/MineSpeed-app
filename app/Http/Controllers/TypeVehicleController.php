@@ -15,9 +15,9 @@ class TypeVehicleController extends Controller
     public function index()
     {
         // Obtener todos los tipos de vehículos
-        $typevehicles = TypeVehicle::all();
+        $typeVehicles = TypeVehicle::all();
         // Mostrar la vista con la lista de tipos de vehículos
-        return view('typevehicles.index', compact('typevehicles'));
+        return view('typevehicles.index', compact('typeVehicles'));
     }
 
     /**
@@ -39,19 +39,22 @@ class TypeVehicleController extends Controller
      */
     public function store(Request $request)
     {
-        // Validar los datos del formulario
-        $request->validate([
-            'name' => 'required|unique:type_vehicles',
+        // Validación de los datos del formulario
+        $validatedData = $request->validate([
+            'name' => 'required|string|max:255|unique:typevehicles',
             // Agrega otras reglas de validación si es necesario
         ]);
 
         // Crear un nuevo registro de tipo de vehículo
-        TypeVehicle::create($request->all());
+        $typeVehicle = new TypeVehicle();
+        $typeVehicle->name = $validatedData['name'];
+        // Agrega más campos si es necesario
+        $typeVehicle->save();
 
-        // Redireccionar a la página de índice con un mensaje de éxito
-        return redirect()->route('typevehicles.index')
-                        ->with('success', 'Type of vehicle created successfully.');
+        // Redirigir a la página de índice con un mensaje de éxito
+        return redirect()->route('typevehicles.index')->with('success', 'Type of vehicle created successfully.');
     }
+
 
     /**
      * Display the specified resource.
@@ -62,9 +65,9 @@ class TypeVehicleController extends Controller
     public function show($id)
     {
         // Obtener el tipo de vehículo por su ID
-        $typevehicle = TypeVehicle::findOrFail($id);
+        $typeVehicle = TypeVehicle::findOrFail($id);
         // Mostrar la vista con los detalles del tipo de vehículo
-        return view('typevehicles.show', compact('typevehicle'));
+        return view('typevehicles.show', compact('typeVehicle'));
     }
 
     /**
@@ -76,9 +79,9 @@ class TypeVehicleController extends Controller
     public function edit($id)
     {
         // Obtener el tipo de vehículo por su ID
-        $typevehicle = TypeVehicle::findOrFail($id);
+        $typeVehicle = TypeVehicle::findOrFail($id);
         // Mostrar el formulario para editar el tipo de vehículo
-        return view('typevehicles.edit', compact('typevehicle'));
+        return view('typevehicles.edit', compact('typeVehicle'));
     }
 
     /**
@@ -90,20 +93,26 @@ class TypeVehicleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validar los datos del formulario
+        // Validación de los datos del formulario
         $request->validate([
-            'name' => 'required|unique:type_vehicles,name,'.$id,
-            // Agrega otras reglas de validación si es necesario
+            'name' => 'required|unique:typevehicles,name,'.$id,
         ]);
 
-        // Actualizar el registro de tipo de vehículo existente
-        $typevehicle = TypeVehicle::findOrFail($id);
-        $typevehicle->update($request->all());
+        // Obtener el registro de tipo de vehículo existente
+        $typeVehicle = TypeVehicle::findOrFail($id);
+
+        // Actualizar los campos del tipo de vehículo con los datos del formulario
+        $typeVehicle->name = $request->name;
+        // Agrega más campos si es necesario
+
+        // Guardar los cambios en la base de datos
+        $typeVehicle->save();
 
         // Redireccionar a la página de índice con un mensaje de éxito
         return redirect()->route('typevehicles.index')
                         ->with('success', 'Type of vehicle updated successfully.');
     }
+
 
     /**
      * Remove the specified resource from storage.
@@ -114,8 +123,8 @@ class TypeVehicleController extends Controller
     public function destroy($id)
     {
         // Buscar y eliminar el registro de tipo de vehículo
-        $typevehicle = TypeVehicle::findOrFail($id);
-        $typevehicle->delete();
+        $typeVehicle = TypeVehicle::findOrFail($id);
+        $typeVehicle->delete();
 
         // Redireccionar a la página de índice con un mensaje de éxito
         return redirect()->route('typevehicles.index')

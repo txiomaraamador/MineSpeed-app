@@ -1,0 +1,19 @@
+/* public/css/styles.css */
+
+/* Estilos para la tabla */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th,
+.table td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+/* Estilos para los botones de acción */
+.btn-action {
+    margin-right: 5px;
+}
